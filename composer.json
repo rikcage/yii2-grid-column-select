@@ -1,8 +1,8 @@
 {
     "name": "rikcage/yii2-grid-column-select",
-    "description": "Show / hide change position selected columns in grid, extension for Yii 2.0 Framework",
+    "description": "Show hide change position selected columns in grid, extension for Yii 2.0 Framework",
     "type": "yii2-extension",
-    "keywords": ["yii2","extension","change position columns","Show / hide columns","grid","yii"],
+    "keywords": ["yii2","extension","change position columns","Show hide columns","grid","yii"],
     "license": "MIT",
     "authors": [
         {
