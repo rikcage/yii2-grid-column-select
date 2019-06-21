@@ -1,4 +1,4 @@
-Grid column select Extension for Yii 2.0 Framework
+Grid column select for kartik grid, Extension for Yii 2.0 Framework
 ========================================
 Show / hide change position selected columns in grid, extension for Yii 2.0 Framework
 
@@ -22,4 +22,37 @@ to the ```require``` section of your `composer.json` file.
 
 Usage
 -----
+in your views
 
+```
+use kartik\grid\GridView;
+or
+use yii\grid\GridView;
+
+	<?php
+		$columns = [
+			['class' => 'yii\grid\SerialColumn'],
+			['class' => 'yii\grid\ActionColumn'],
+			'id',
+			'title',
+		];
+	?>
+
+	<?php 
+		$grid = ColumnSelector::widget([
+				'dataProvider' => $dataProvider,
+				'filterModel' => $searchModel,
+				'columns' => $columns,
+		]);
+		echo $grid;
+		$columns = ColumnSelector::getShowColumns();
+	?>
+
+	<?php
+		echo GridView::widget([
+			'dataProvider' => $dataProvider,
+			'filterModel' => $searchModel,
+			'columns' => $columns,
+		]);
+	?>
+```
