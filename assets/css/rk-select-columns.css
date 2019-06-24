@@ -19,3 +19,22 @@
 .form-column-selector{
 	padding: 0px 20px 10px;
 }
+
+.dropdown-menu.kv-checkbox-list {
+    max-height: 360px;
+    min-width: 240px;
+    overflow: auto;
+}
+.kv-checkbox-list .checkbox {
+    padding: 0 20px;
+}
+
+.kv-checkbox-list label {
+    width: 100%;
+}
+
+.kv-checkbox-list label.disabled {
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    opacity: .65;
+}

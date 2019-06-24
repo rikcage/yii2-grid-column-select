@@ -9,12 +9,12 @@ class ColumnSelectorAsset extends AssetBundle
     public $sourcePath = '@vendor/rikcage/yii2-grid-column-select/assets';
 
     public $js = [
-        'js/kv-export-data.min.js',
-        'js/kv-export-columns.min.js',
+        'js/rk-select-data.min.js',
+        'js/rk-select-columns.min.js',
     ];
 
     public $css = [
-        'css/kv-export-columns.css',
+        'css/rk-select-columns.min.css',
     ];
 	
     public $depends = [

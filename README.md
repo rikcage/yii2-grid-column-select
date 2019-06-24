@@ -25,6 +25,8 @@ Usage
 in your views
 
 ```
+use rikcage\grid_column_select\ColumnSelector;
+
 use kartik\grid\GridView;
 or
 use yii\grid\GridView;

@@ -333,6 +333,9 @@ class ColumnSelector extends GridView
 		
 		$columns = [];
 		foreach ($this->selectedColumns as $index => $key) {
+			if(empty($this->columns[$key])){
+				continue;
+			}
 			$column = $this->columns[$key];
 			$isActionColumn = $column instanceof ActionColumn;
 			$isNoExport = in_array($key, $this->noExportColumns) || !$this->showColumnSelector;
