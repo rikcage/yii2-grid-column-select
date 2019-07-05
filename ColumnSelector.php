@@ -40,7 +40,7 @@ class ColumnSelector extends GridView
     /**
      * @var string Name of cookies the column indices for selection to be shown.
      */
-	public $cookiesName = 'rk_GS_selectedColumns';
+	public $cookiesName = 'rk_GS';
 
 	public $exportColumnsView = '_columns.php';
 	
@@ -151,6 +151,7 @@ class ColumnSelector extends GridView
 	
     public function init()
     {
+		$this->cookiesName .= '_'.Yii::$app->controller->module->id.'/'.Yii::$app->controller->id.'/'.Yii::$app->controller->action->id;
 		self::$columns_show = $this->columns;
 		
 		//$this->view->registerJsFile('path/to/myfile', ['depends' => [\yii\web\JqueryAsset::className()]]);
@@ -198,7 +199,7 @@ class ColumnSelector extends GridView
             $this->initSelectedColumns();
         }else{
 			$cookies = Yii::$app->request->cookies;
-			$this->selectedColumns = $cookies->getValue('rk_GS_selectedColumns');
+			$this->selectedColumns = $cookies->getValue($this->cookiesName);
 		}
     }
 	
