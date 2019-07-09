@@ -175,6 +175,53 @@ class ColumnSelector extends GridView
     {
 		return self::$columns_show;
 	}
+
+    protected function getSettings()
+    {
+		if(!empty(Yii::$app->modules['columnSelector']['params']) && ($params=Yii::$app->modules['columnSelector']['params']) &&
+			(isset($params['userClass']) && isset($params['userid']) && isset($params['settings_field']) )){
+			$user_settings_ = new $params['userClass']();
+			$field_userid = $params['userid'];
+			$field_settings = $params['settings_field'];
+	        if (($user_settings = $user_settings_::findOne([$field_userid => (int)Yii::$app->user->identity->id])) !== null) {
+				$settings = Json::decode($user_settings->$field_settings);
+				return (isset($settings[$this->cookiesName]))? $settings[$this->cookiesName]: null;
+			} else {
+				return null;
+			}
+		}else{
+			$cookies = Yii::$app->request->cookies;
+			return $cookies->getValue($this->cookiesName);
+		}
+		
+	}
+
+    protected function setSettings($value)
+    {
+		if(!empty(Yii::$app->modules['columnSelector']['params']) && ($params=Yii::$app->modules['columnSelector']['params']) &&
+			(isset($params['userClass']) && isset($params['userid']) && isset($params['settings_field']) )){
+			$user_settings_ = new $params['userClass']();
+			$field_userid = $params['userid'];
+			$field_settings = $params['settings_field'];
+	        if (($user_settings = $user_settings_::findOne([$field_userid => (int)Yii::$app->user->identity->id])) !== null) {
+				$settings = Json::decode($user_settings->$field_settings);
+				$settings[$this->cookiesName] = $value;
+				$user_settings->$field_settings = Json::encode($settings);
+			} else {
+				$user_settings = new $params['userClass']();
+				$user_settings->$field_userid = (int)Yii::$app->user->identity->id;
+				$settings = [$this->cookiesName => $value];
+				$user_settings->$field_settings = Json::encode($settings);
+			}
+			$user_settings->save();
+		}else{
+			$cookies = Yii::$app->response->cookies;
+			$cookies->add(new \yii\web\Cookie([
+				'name' => $this->cookiesName,
+				'value' => $value,
+			]));
+		}
+	}
 	
     /**
      * Initialize export menu settings
@@ -198,8 +245,7 @@ class ColumnSelector extends GridView
             $this->_columnSelectorEnabled = $request->post($this->colSelFlagParam, $this->_columnSelectorEnabled);
             $this->initSelectedColumns();
         }else{
-			$cookies = Yii::$app->request->cookies;
-			$this->selectedColumns = $cookies->getValue($this->cookiesName);
+			$this->selectedColumns = $this->getSettings();
 		}
     }
 	
@@ -349,12 +395,7 @@ class ColumnSelector extends GridView
 			$columns = [[]];
 		}
 		$this->_visibleColumns = $columns;
-		$value = $this->selectedColumns;
-		$cookies = Yii::$app->response->cookies;
-		$cookies->add(new \yii\web\Cookie([
-			'name' => $this->cookiesName,
-			'value' => $this->selectedColumns,
-		]));
+		$this->setSettings($this->selectedColumns);
 		
     }
 	
