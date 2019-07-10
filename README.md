@@ -45,6 +45,7 @@ use yii\grid\GridView;
 				'dataProvider' => $dataProvider,
 				'filterModel' => $searchModel,
 				'columns' => $columns,
+				'defaultShowColumns'=>[1, 0,], // default settinfs show  first title after id
 		]);
 		echo $grid;
 		$columns = ColumnSelector::getShowColumns();
