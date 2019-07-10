@@ -303,10 +303,15 @@ class ColumnSelector extends GridView
         if (!isset($this->selectedColumns)) {
             $column_keys = array_keys($this->columnSelector);
 			$keys = [];
-			foreach ($this->defaultShowColumns as $key => $value) {
-				if(in_array($value, $column_keys)){
-					$keys[]=$value;
+			if(is_array($this->defaultShowColumns) && count($this->defaultShowColumns)){
+				foreach ($this->defaultShowColumns as $key => $value) {
+					if(in_array($value, $column_keys)){
+						$keys[]=$value;
+					}
 				}
+			}else{
+				$keys = array_keys($this->columnSelector);
+				$keys = array_combine($keys, $keys);
 			}
             $this->selectedColumns = $keys;
         }
