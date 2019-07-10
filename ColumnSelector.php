@@ -57,7 +57,12 @@ class ColumnSelector extends GridView
      * @var array the selected column indexes for export. If not set this will default to all columns.
      */
     public $selectedColumns;
-	
+
+    /**
+     * @var array the selected column indexes for export. If not set this will default to all columns.
+     */
+    public $defaultShowColumns;
+
     /**
      * @var array the settings for the toggle all checkbox to check / uncheck the columns as a batch. Should be setup as
      * an associative array which can have the following keys:
@@ -100,7 +105,7 @@ class ColumnSelector extends GridView
      * [[triggerDownload]] setting
      */
     private $_triggerDownload;
-	
+
     /**
      * @var array the visble columns for export
      */
@@ -295,10 +300,15 @@ class ColumnSelector extends GridView
             $selector[$key] = $this->getColumnLabel($key, $column);
         }
         $this->columnSelector = array_replace($selector, $this->columnSelector);
-		
         if (!isset($this->selectedColumns)) {
-            $keys = array_keys($this->columnSelector);
-            $this->selectedColumns = array_combine($keys, $keys);
+            $column_keys = array_keys($this->columnSelector);
+			$keys = [];
+			foreach ($this->defaultShowColumns as $key => $value) {
+				if(in_array($value, $column_keys)){
+					$keys[]=$value;
+				}
+			}
+            $this->selectedColumns = $keys;
         }
 		
 	}
