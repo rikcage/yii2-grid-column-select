@@ -59,3 +59,20 @@ use yii\grid\GridView;
 		]);
 	?>
 ```
+
+if you want save selection of columns which user selected, in db you should add in your settings file (/common/config/main.php)
+
+```
+	'modules' => [
+    ...
+		'columnSelector' => [
+			'class' => 'rikcage\grid_column_select\ColumnSelector',
+			'params' => [
+				'userClass' => 'common\models\User', // models of user settings
+				'userid' => 'id', // field name which have user identity Yii::$app->user->identity->id
+				'settings_field' => 'params', // field name for save parameters which user selected
+			]
+		],
+    
+	],
+```
